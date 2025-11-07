@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <menuitem id="menu_pos_user_org_root" name="Organisation POS" parent="point_of_sale.menu_point_root" sequence="90"/>
+  <menuitem id="menu_pos_credit_log" name="Journaux de crédits" parent="menu_pos_user_org_root" action="action_pos_credit_log"/>
+
+  <record id="view_user_presence_tree" model="ir.ui.view">
+    <field name="name">user.presence.tree</field>
+    <field name="model">user.presence</field>
+    <field name="arch" type="xml">
+      <tree create="false" edit="false" delete="false">
+        <field name="user_id"/>
+        <field name="last_seen"/>
+        <field name="is_online"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="action_user_presence" model="ir.actions.act_window">
+    <field name="name">Sessions actives</field>
+    <field name="res_model">user.presence</field>
+    <field name="view_mode">tree</field>
+    <field name="context">{"search_default_online": 1}</field>
+  </record>
+
+  <menuitem id="menu_user_presence" name="Sessions actives" parent="menu_pos_user_org_root" action="action_user_presence"/>
+
+  <record id="view_user_presence_log_tree" model="ir.ui.view">
+    <field name="name">user.presence.log.tree</field>
+    <field name="model">user.presence.log</field>
+    <field name="arch" type="xml">
+      <tree create="false" edit="false" delete="false">
+        <field name="create_date"/>
+        <field name="user_id"/>
+        <field name="seen_at"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="action_user_presence_log" model="ir.actions.act_window">
+    <field name="name">Historique des connexions</field>
+    <field name="res_model">user.presence.log</field>
+    <field name="view_mode">tree</field>
+  </record>
+
+  <menuitem id="menu_user_presence_log" name="Historique des connexions" parent="menu_pos_user_org_root" action="action_user_presence_log"/>
+</odoo>

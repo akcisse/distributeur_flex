@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Règle de sécurité pour les produits template avec combo -->
+        <record id="product_template_combo_rule" model="ir.rule">
+            <field name="name">Product Template Combo Access</field>
+            <field name="model_id" ref="product.model_product_template"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('point_of_sale.group_pos_user'))]"/>
+        </record>
+
+        <!-- Règle de sécurité pour les produits avec combo -->
+        <record id="product_product_combo_rule" model="ir.rule">
+            <field name="name">Product Product Combo Access</field>
+            <field name="model_id" ref="product.model_product_product"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('point_of_sale.group_pos_user'))]"/>
+        </record>
+
+        <!-- Règle de sécurité pour les options de combo -->
+        <record id="pos_combo_option_rule" model="ir.rule">
+            <field name="name">POS Combo Option Access</field>
+            <field name="model_id" ref="model_pos_combo_option"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('point_of_sale.group_pos_user'))]"/>
+        </record>
+    </data>
+</odoo> 

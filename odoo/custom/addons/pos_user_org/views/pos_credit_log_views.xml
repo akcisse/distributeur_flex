@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="view_pos_credit_log_tree" model="ir.ui.view">
+    <field name="name">pos.credit.log.tree</field>
+    <field name="model">pos.credit.log</field>
+    <field name="arch" type="xml">
+      <tree create="false" edit="false" delete="false" decoration-success="status == 'sent'" decoration-muted="status == 'cancelled'" decoration-warning="is_cancellation == True" decoration-info="status == 'served'">
+        <field name="create_date"/>
+        <field name="status_display" string="Statut"/>
+        <field name="user_id"/>
+        <field name="employee_id"/>
+        <field name="session_id"/>
+        <field name="product_name"/>
+        <field name="plu_no"/>
+        <field name="quantity"/>
+        <field name="server_no"/>
+        <field name="success"/>
+        <field name="status" invisible="1"/>
+        <field name="is_cancellation" invisible="1"/>
+        <field name="message"/>
+        <field name="cancelled_at"/>
+        <field name="cancelled_by"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="view_pos_credit_log_form" model="ir.ui.view">
+    <field name="name">pos.credit.log.form</field>
+    <field name="model">pos.credit.log</field>
+    <field name="arch" type="xml">
+      <form create="false" edit="false" delete="false">
+        <sheet>
+          <div class="oe_title">
+            <h1>
+              <field name="status_display" readonly="1"/>
+            </h1>
+          </div>
+          <group>
+            <group string="Informations Générales">
+              <field name="create_date"/>
+              <field name="status"/>
+              <field name="is_cancellation"/>
+              <field name="credit_id"/>
+            </group>
+            <group string="Utilisateur">
+              <field name="user_id"/>
+              <field name="employee_id"/>
+              <field name="server_no"/>
+            </group>
+          </group>
+          
+          <group>
+            <group string="Détails Produit">
+              <field name="session_id"/>
+              <field name="order_line_id"/>
+              <field name="order_ref"/>
+              <field name="product_name"/>
+              <field name="plu_no"/>
+              <field name="quantity"/>
+            </group>
+            <group string="Résultat">
+              <field name="success"/>
+              <field name="message"/>
+              <field name="response_payload" widget="text"/>
+            </group>
+          </group>
+          
+          <group string="Annulation" invisible="status != 'cancelled'">
+            <group>
+              <field name="cancelled_at"/>
+              <field name="cancelled_by"/>
+            </group>
+            <group>
+              <field name="cancellation_response" widget="text"/>
+            </group>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <!-- Vue recherche avec filtres -->
+  <record id="view_pos_credit_log_search" model="ir.ui.view">
+    <field name="name">pos.credit.log.search</field>
+    <field name="model">pos.credit.log</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="product_name"/>
+        <field name="plu_no"/>
+        <field name="user_id"/>
+        <field name="employee_id"/>
+        <field name="session_id"/>
+        
+        <filter string="Succès" name="success" domain="[('success', '=', True)]"/>
+        <filter string="Échecs" name="failed" domain="[('success', '=', False)]"/>
+        
+        <separator/>
+        <filter string="Envoyés" name="sent" domain="[('status', '=', 'sent')]"/>
+        <filter string="Servis" name="served" domain="[('status', '=', 'served')]"/>
+        <filter string="Annulés" name="cancelled" domain="[('status', '=', 'cancelled')]"/>
+        <filter string="Annulations" name="cancellations" domain="[('is_cancellation', '=', True)]"/>
+        
+        <separator/>
+        <filter string="Aujourd'hui" name="today" domain="[('create_date', '&gt;=', context_today().strftime('%Y-%m-%d'))]"/>
+        <filter string="Cette semaine" name="this_week" domain="[('create_date', '&gt;=', (context_today() - relativedelta(weeks=1)).strftime('%Y-%m-%d'))]"/>
+        <filter string="Ce mois" name="this_month" domain="[('create_date', '&gt;=', (context_today() - relativedelta(months=1)).strftime('%Y-%m-%d'))]"/>
+        
+        <group expand="0" string="Grouper par">
+          <filter string="Statut" name="group_status" context="{'group_by': 'status'}"/>
+          <filter string="Utilisateur" name="group_user" context="{'group_by': 'user_id'}"/>
+          <filter string="Employé" name="group_employee" context="{'group_by': 'employee_id'}"/>
+          <filter string="Session" name="group_session" context="{'group_by': 'session_id'}"/>
+          <filter string="Produit" name="group_product" context="{'group_by': 'product_name'}"/>
+          <filter string="Date" name="group_date" context="{'group_by': 'create_date:day'}"/>
+        </group>
+      </search>
+    </field>
+  </record>
+
+  <record id="action_pos_credit_log" model="ir.actions.act_window">
+    <field name="name">Journaux de crédits</field>
+    <field name="res_model">pos.credit.log</field>
+    <field name="view_mode">tree,form,graph,pivot</field>
+    <field name="context">{'search_default_today': 1}</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Aucun crédit envoyé pour le moment
+      </p>
+      <p>
+        Les crédits envoyés au distributeur apparaîtront ici.<br/>
+        Les annulations sont également tracées pour une traçabilité complète.
+      </p>
+    </field>
+  </record>
+</odoo>

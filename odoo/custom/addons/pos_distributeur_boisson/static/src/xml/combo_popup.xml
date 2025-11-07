@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ComboPopup" owl="1">
+        <div class="popup popup-combo">
+            <div class="popup-header">
+                <h2><t t-esc="props.title"/></h2>
+                <button class="close-button" t-on-click="cancel">
+                    <i class="fa fa-times"/>
+                </button>
+            </div>
+            
+            <div class="popup-body">
+                <div class="combo-container">
+                    <!-- Affichage des catégories et options -->
+                    <div t-foreach="comboLines" t-as="comboLine" t-key="comboLine.id" class="combo-category">
+                        <div class="category-header">
+                            <h3>
+                                <t t-esc="getCategoryName(comboLine.category_id[0])"/>
+                                <span class="selection-info">
+                                    (<t t-esc="state.selectedOptions[comboLine.category_id[0]] ? state.selectedOptions[comboLine.category_id[0]].length : 0"/>/<t t-esc="comboLine.max_selections"/>)
+                                </span>
+                                <span t-if="comboLine.required" class="required-badge">*</span>
+                            </h3>
+                            <p t-if="comboLine.min_selections > 0" class="min-selections">
+                                Minimum: <t t-esc="comboLine.min_selections"/>
+                            </p>
+                        </div>
+                        
+                        <div class="options-grid">
+                            <div t-foreach="getCategoryOptions(comboLine.category_id[0])" 
+                                 t-as="option" 
+                                 t-key="option.id" 
+                                 class="option-item"
+                                 t-att-class="{'selected': isOptionSelected(comboLine.category_id[0], option.id)}"
+                                 t-on-click="() => this.toggleOption(comboLine.category_id[0], option.id)">
+                                
+                                <div class="option-content">
+                                    <div class="option-name">
+                                        <t t-esc="option.name"/>
+                                    </div>
+                                    <div class="option-price">
+                                        <t t-if="option.price_extra > 0">
+                                            +<t t-esc="option.price_extra.toFixed(2)"/> €
+                                        </t>
+                                        <t t-else="">Inclus</t>
+                                    </div>
+                                </div>
+                                
+                                <div class="option-checkbox">
+                                    <i t-if="isOptionSelected(comboLine.category_id[0], option.id)" 
+                                       class="fa fa-check"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Prix total additionnel -->
+                    <div t-if="state.totalExtraPrice > 0" class="total-extra-price">
+                        <strong>Prix additionnel total: <t t-esc="state.totalExtraPrice.toFixed(2)"/> €</strong>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="popup-footer">
+                <button class="btn btn-secondary" t-on-click="cancel">
+                    <t t-esc="props.cancelText"/>
+                </button>
+                <button class="btn btn-primary" 
+                        t-on-click="confirm"
+                        t-att-disabled="!state.isValid">
+                    <t t-esc="props.confirmText"/>
+                </button>
+            </div>
+        </div>
+    </t>
+
+</templates> 

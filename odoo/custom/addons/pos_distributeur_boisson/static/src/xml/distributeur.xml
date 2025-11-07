@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="pos_distributeur_boisson.DistributeurButton" owl="1">
+        <button class="control-button o_distributeur_button" t-on-click="onClick" style="background: #71639e; border: solid 1px #5a4f7a; color: white;">
+            <i class="fa fa-tint" role="img" aria-label="Distributeur" title="Distributeur"/>
+            <span> </span>
+            <span>Distributeur</span>
+        </button>
+    </t>
+</templates>
