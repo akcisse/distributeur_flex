@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Actions pour chaque modèle (définies en premier) -->
+    <record id="action_pos_combo_category" model="ir.actions.act_window">
+        <field name="name">Catégories Combo</field>
+        <field name="res_model">pos.combo.category</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_pos_combo_option" model="ir.actions.act_window">
+        <field name="name">Options Combo</field>
+        <field name="res_model">pos.combo.option</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_product_combo_line" model="ir.actions.act_window">
+        <field name="name">Lignes de Combo</field>
+        <field name="res_model">product.combo.line</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Vue formulaire pour pos.combo.category -->
+    <record id="pos_combo_category_form_view" model="ir.ui.view">
+        <field name="name">pos.combo.category.form</field>
+        <field name="model">pos.combo.category</field>
+        <field name="arch" type="xml">
+            <form string="Catégorie Combo">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="sequence" widget="handle"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description" name="description">
+                            <field name="description" nolabel="1"/>
+                        </page>
+                        <page string="Options" name="options">
+                            <field name="option_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="product_id"/>
+                                    <field name="price_extra"/>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="active"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue liste pour pos.combo.category -->
+    <record id="pos_combo_category_tree_view" model="ir.ui.view">
+        <field name="name">pos.combo.category.tree</field>
+        <field name="model">pos.combo.category</field>
+        <field name="arch" type="xml">
+            <tree string="Catégories Combo">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vue formulaire pour pos.combo.option -->
+    <record id="pos_combo_option_form_view" model="ir.ui.view">
+        <field name="name">pos.combo.option.form</field>
+        <field name="model">pos.combo.option</field>
+        <field name="arch" type="xml">
+            <form string="Option Combo">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="combo_category_id" required="1"/>
+                            <field name="sequence" widget="handle"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="product_id" required="1" 
+                                   domain="[('is_distributeur_boisson', '=', True), ('plu_code', '!=', False), ('is_combo_product', '=', False)]"
+                                   options="{'no_create': True}"/>
+                            <field name="price_extra"/>
+                        </group>
+                    </group>
+                    
+                    <!-- Configuration du distributeur pour cet ingrédient -->
+                    <group string="Configuration Distributeur" name="distributeur_config">
+                        <group>
+                            <field name="plu_code" string="Code PLU"/>
+                            <field name="volume_distributeur" string="Volume (cl)"/>
+                            <field name="credits_per_serving" string="Crédits par portion"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description" name="description">
+                            <field name="description" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue liste pour pos.combo.option -->
+    <record id="pos_combo_option_tree_view" model="ir.ui.view">
+        <field name="name">pos.combo.option.tree</field>
+        <field name="model">pos.combo.option</field>
+        <field name="arch" type="xml">
+            <tree string="Options Combo">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="combo_category_id"/>
+                <field name="product_id"/>
+                <field name="plu_code"/>
+                <field name="volume_distributeur"/>
+                <field name="credits_per_serving"/>
+                <field name="price_extra"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vue liste pour sélection d'ingrédients -->
+    <record id="pos_combo_option_selection_tree_view" model="ir.ui.view">
+        <field name="name">pos.combo.option.selection.tree</field>
+        <field name="model">pos.combo.option</field>
+        <field name="arch" type="xml">
+            <tree string="Sélectionner les Ingrédients" editable="bottom">
+                <field name="name"/>
+                <field name="combo_category_id"/>
+                <field name="product_id"/>
+                <field name="plu_code"/>
+                <field name="volume_distributeur"/>
+                <field name="credits_per_serving"/>
+                <field name="price_extra"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vue formulaire pour sélection d'ingrédients -->
+    <record id="pos_combo_option_selection_form_view" model="ir.ui.view">
+        <field name="name">pos.combo.option.selection.form</field>
+        <field name="model">pos.combo.option</field>
+        <field name="arch" type="xml">
+            <form string="Sélectionner un Ingrédient">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="combo_category_id"/>
+                            <field name="product_id"/>
+                        </group>
+                        <group>
+                            <field name="plu_code"/>
+                            <field name="volume_distributeur"/>
+                            <field name="credits_per_serving"/>
+                            <field name="price_extra"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_select_ingredient" type="object" string="Sélectionner cet Ingrédient" class="btn-primary"/>
+                    <button string="Fermer" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+
+    <!-- Vue formulaire pour product.combo.line -->
+    <record id="product_combo_line_form_view" model="ir.ui.view">
+        <field name="name">product.combo.line.form</field>
+        <field name="model">product.combo.line</field>
+        <field name="arch" type="xml">
+            <form string="Ligne Combo">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="product_tmpl_id" required="1"/>
+                            <field name="sequence" widget="handle"/>
+                        </group>
+                        <group>
+                            <field name="combo_category_id" required="1"/>
+                            <field name="required"/>
+                            <field name="min_selections"/>
+                            <field name="max_selections"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue liste pour product.combo.line -->
+    <record id="product_combo_line_tree_view" model="ir.ui.view">
+        <field name="name">product.combo.line.tree</field>
+        <field name="model">product.combo.line</field>
+        <field name="arch" type="xml">
+            <tree string="Lignes Combo">
+                <field name="sequence" widget="handle"/>
+                <field name="product_tmpl_id"/>
+                <field name="combo_category_id"/>
+                <field name="required"/>
+                <field name="min_selections"/>
+                <field name="max_selections"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Mise à jour des actions avec les vues -->
+    <record id="action_pos_combo_category" model="ir.actions.act_window">
+        <field name="name">Catégories Combo</field>
+        <field name="res_model">pos.combo.category</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('pos_combo_category_tree_view')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('pos_combo_category_form_view')})]"/>
+    </record>
+
+    <record id="action_pos_combo_option" model="ir.actions.act_window">
+        <field name="name">Options Combo</field>
+        <field name="res_model">pos.combo.option</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('pos_combo_option_tree_view')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('pos_combo_option_form_view')})]"/>
+    </record>
+
+    <record id="action_product_combo_line" model="ir.actions.act_window">
+        <field name="name">Lignes de Combo</field>
+        <field name="res_model">product.combo.line</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('product_combo_line_tree_view')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('product_combo_line_form_view')})]"/>
+    </record>
+
+    <!-- Nouveau menu racine sous Configuration du POS -->
+    <menuitem id="menu_pos_combo_root"
+              name="Configuration Combo"
+              parent="point_of_sale.menu_point_config_product"
+              sequence="5"
+              groups="point_of_sale.group_pos_manager"/>
+
+    <!-- Menu enfant pour la catégorie de combo -->
+    <menuitem id="menu_pos_combo_category"
+              name="Catégories de Composants"
+              parent="menu_pos_combo_root"
+              action="action_pos_combo_category"
+              sequence="20"/>
+
+    <!-- Menu enfant pour les options -->
+    <menuitem id="menu_pos_combo_option"
+              name="Options de Composants"
+              parent="menu_pos_combo_root"
+              action="action_pos_combo_option"
+              sequence="30"/>
+
+    <!-- Menu enfant pour les lignes de combos -->
+    <menuitem id="menu_product_combo_line"
+              name="Produits Combo"
+              parent="menu_pos_combo_root"
+              action="action_product_combo_line"
+              sequence="40"/>
+
+    <!-- Vue héritée pour remplacer l'affichage des combo_line_ids par les ingrédients -->
+    <record id="product_template_form_view_combo_ingredients" model="ir.ui.view">
+        <field name="name">product.template.form.combo.ingredients</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <!-- Remplacer complètement l'onglet Combo -->
+            <xpath expr="//page[@name='combos']" position="replace">
+                <page name="combos" string="Combo Choices" groups="point_of_sale.group_pos_user" invisible="not detailed_type == 'combo'">
+                    <!-- Section des catégories de combo -->
+                    <group string="Configuration des Catégories" name="combo_categories" invisible="detailed_type != 'combo'">
+                        <field name="combo_line_ids">
+                            <tree editable="bottom">
+                                <field name="combo_category_id" required="1"/>
+                                <field name="required"/>
+                                <field name="min_selections"/>
+                                <field name="max_selections"/>
+                                <field name="sequence" widget="handle"/>
+                            </tree>
+                        </field>
+                    </group>
+                    
+                    <!-- Section de sélection des ingrédients -->
+                    <group string="Sélection des Ingrédients" name="ingredient_selection" invisible="detailed_type != 'combo'">
+                        <div class="alert alert-info" role="alert" style="background-color: #d1ecf1; border-color: #bee5eb; color: #0c5460; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                            <strong>Note :</strong> Sélectionnez précisément les ingrédients que vous voulez utiliser pour ce cocktail. 
+                            Seuls les ingrédients sélectionnés ici seront disponibles lors de la commande.
+                        </div>
+                        
+                        <!-- Bouton pour ajouter des ingrédients -->
+                        <div style="margin-bottom: 15px;">
+                            <button name="action_add_ingredients" type="object" 
+                                    string="Ajouter des Ingrédients" 
+                                    class="btn btn-primary"
+                                    invisible="detailed_type != 'combo'"/>
+                        </div>
+                        
+                        <!-- Sélection des ingrédients spécifiques -->
+                        <field name="selected_combo_ingredient_ids" invisible="detailed_type != 'combo'" 
+                               domain="[('active', '=', True)]"
+                               context="{'default_active': True}">
+                            <tree>
+                                <field name="name" string="Nom de l'ingrédient"/>
+                                <field name="product_id" string="Produit associé"/>
+                                <field name="combo_category_id" string="Catégorie"/>
+                                <field name="active" string="Actif" widget="boolean_toggle"/>
+                                <field name="sequence" widget="handle"/>
+                            </tree>
+                        </field>
+                        
+                        <!-- Message d'information -->
+                        <div class="alert alert-info" role="alert" style="background-color: #d1ecf1; border-color: #bee5eb; color: #0c5460; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                            <strong>Note :</strong> Les cocktails (produits combo) sont automatiquement marqués comme boissons du distributeur.
+                            Le volume et les crédits sont calculés à partir des ingrédients sélectionnés.
+                        </div>
+                    </group>
+                    
+                    <!-- Section d'affichage des ingrédients sélectionnés -->
+                    <group string="Ingrédients Sélectionnés" name="selected_ingredients_display" invisible="detailed_type != 'combo'">
+                        <div class="alert alert-success" role="alert" style="background-color: #d4edda; border-color: #c3e6cb; color: #155724; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                            <strong>Résumé :</strong> Voici les ingrédients qui seront disponibles pour ce cocktail lors de la commande.
+                        </div>
+                        
+                        <!-- Affichage des ingrédients sélectionnés -->
+                        <field name="combo_ingredient_ids" invisible="detailed_type != 'combo'" readonly="1">
+                            <tree>
+                                <field name="name" string="Nom de l'ingrédient"/>
+                                <field name="product_id" string="Produit associé"/>
+                                <field name="combo_category_id" string="Catégorie"/>
+                                <field name="active" string="Actif" widget="boolean_toggle"/>
+                                <field name="sequence" widget="handle"/>
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

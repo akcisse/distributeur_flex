@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action pour afficher les produits du distributeur -->
+    <record id="action_view_distributeur_products" model="ir.actions.act_window">
+        <field name="name">Boissons du Distributeur</field>
+        <field name="res_model">product.product</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('is_distributeur_boisson', '=', True)]</field>
+        <field name="context">{'search_default_distributeur_boissons': 1}</field>
+    </record>
+
+    <!-- Action pour afficher les produits du distributeur -->
+    <record id="action_view_distributeur_products" model="ir.actions.act_window">
+        <field name="name">Boissons du Distributeur</field>
+        <field name="res_model">product.product</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('is_distributeur_boisson', '=', True)]</field>
+        <field name="context">{'search_default_distributeur_boissons': 1}</field>
+    </record>
+</odoo> 

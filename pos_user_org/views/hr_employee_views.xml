@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="view_hr_employee_form_inherit_pos_user_org" model="ir.ui.view">
+    <field name="name">hr.employee.form.pos_user_org</field>
+    <field name="model">hr.employee</field>
+    <field name="inherit_id" ref="hr.view_employee_form"/>
+    <field name="arch" type="xml">
+      <!-- Case à cocher Barman après l’utilisateur associé -->
+      
+      <!-- Server No après l’email pro -->
+     
+      <!-- Fallback: ajouter un groupe visible en haut si les xpaths ci-dessus ne matchent pas -->
+      <xpath expr="//sheet//group[1]" position="inside">
+        <group string="Point de Vente (Distributeur)">
+          <field name="is_barman"/>
+          <field name="server_no"/>
+        </group>
+      </xpath>
+    </field>
+  </record>
+</odoo>

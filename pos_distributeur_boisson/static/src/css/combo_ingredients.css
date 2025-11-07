@@ -1,0 +1,120 @@
+/* Styles pour l'affichage des ingrédients dans l'onglet Combo */
+
+.o_combo_ingredients .card {
+    border: 1px solid #dee2e6;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.o_combo_ingredients .card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.o_combo_ingredients .card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    padding: 0.75rem 1rem;
+}
+
+.o_combo_ingredients .card-header h5 {
+    margin: 0;
+    color: #495057;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.o_combo_ingredients .card-header .badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+}
+
+.o_combo_ingredients .card-body {
+    padding: 1rem;
+}
+
+.o_combo_ingredients .ingredient-item {
+    background-color: #ffffff;
+    border: 1px solid #e9ecef;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.o_combo_ingredients .ingredient-item:hover {
+    border-color: #007bff;
+    background-color: #f8f9ff;
+    transform: translateY(-1px);
+}
+
+.o_combo_ingredients .ingredient-item .badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    background-color: #17a2b8;
+    color: white;
+}
+
+.o_combo_ingredients .text-muted {
+    color: #6c757d !important;
+    font-size: 0.875rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .o_combo_ingredients .col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
+    .o_combo_ingredients .ingredient-item {
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Animation pour les cartes */
+.o_combo_ingredients .card {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Styles pour les alertes */
+.o_combo_ingredients .alert {
+    border-radius: 0.375rem;
+    border: 1px solid transparent;
+}
+
+.o_combo_ingredients .alert-info {
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+    color: #0c5460;
+}
+
+.o_combo_ingredients .alert-warning {
+    background-color: #fff3cd;
+    border-color: #ffeaa7;
+    color: #856404;
+}
+
+/* Styles pour les icônes */
+.o_combo_ingredients .fa {
+    margin-right: 0.5rem;
+}
+
+/* Styles pour les badges */
+.o_combo_ingredients .badge-warning {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.o_combo_ingredients .badge-info {
+    background-color: #17a2b8;
+    color: white;
+} 

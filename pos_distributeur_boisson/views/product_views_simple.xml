@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vue formulaire principale bien organisée -->
+    <record id="product_distributeur_form_view" model="ir.ui.view">
+        <field name="name">product.product.distributeur.form</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <form string="Produit Distributeur">
+                <sheet>
+                    <!-- Informations générales du produit -->
+                    <group string="Informations Générales">
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="default_code"/>
+                            <field name="barcode"/>
+                            <field name="categ_id"/>
+                            <field name="type"/>
+                        </group>
+                        <group>
+                            <field name="list_price"/>
+                            <field name="standard_price"/>
+                            <field name="available_in_pos"/>
+                        </group>
+                    </group>
+
+                    <!-- Configuration du distributeur -->
+                    <group string="Configuration Distributeur" name="distributeur_config">
+                        <group>
+                            <field name="is_distributeur_boisson" string="Boisson du distributeur"/>
+                            <field name="needs_distributor" string="Nécessite distributeur" 
+                                   invisible="not is_distributeur_boisson"/>
+                            <field name="is_combo_product" string="Produit Combo"/>
+                            <field name="is_ingredient_only" string="Ingrédient uniquement"/>
+                        </group>
+                        <group>
+                            <field name="plu_code" string="Code PLU" 
+                                   invisible="not is_distributeur_boisson or not needs_distributor"/>
+                            <field name="volume_distributeur" string="Volume (cl)" 
+                                   invisible="not is_distributeur_boisson or not needs_distributor or is_combo_product"/>
+                            <field name="combo_volume_total" string="Volume total (cl)" 
+                                   invisible="not is_distributeur_boisson or not needs_distributor or not is_combo_product"/>
+                            <field name="credits_per_serving" string="Crédits par portion" 
+                                   invisible="not is_distributeur_boisson or not needs_distributor"/>
+                        </group>
+                        
+
+                    </group>
+
+                    <!-- Onglets pour les fonctionnalités avancées -->
+                    <notebook>
+                        <!-- Onglet Combo - visible seulement pour les produits combo -->
+                        <page string="Configuration Combo" name="combo_config" 
+                              invisible="not is_combo_product">
+                            
+                            <!-- Message d'information pour les produits combo -->
+                            <div class="alert alert-info" role="alert" 
+                                 style="background-color: #d1ecf1; border-color: #bee5eb; color: #0c5460; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                                <strong>Produit Combo :</strong> Ce produit permet aux clients de personnaliser leur commande 
+                                en sélectionnant différents ingrédients selon leurs préférences.
+                            </div>
+
+                            <!-- Configuration des catégories de combo -->
+                            <group string="Catégories de Composants" name="combo_categories">
+                                <field name="combo_line_ids">
+                                    <tree editable="bottom">
+                                        <field name="combo_category_id" required="1"/>
+                                        <field name="required"/>
+                                        <field name="min_selections"/>
+                                        <field name="max_selections"/>
+                                        <field name="sequence" widget="handle"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+
+                        <!-- Onglet Ingrédients - visible pour les produits combo -->
+                        <page string="Ingrédients du Cocktail" name="combo_ingredients" 
+                              invisible="not is_combo_product">
+                            
+                            <!-- Message d'information pour les ingrédients -->
+                            <div class="alert alert-info" role="alert" 
+                                 style="background-color: #e7f3ff; border-color: #b3d9ff; color: #004085; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                                <strong>Ingrédients du Cocktail :</strong> Sélectionnez les ingrédients qui seront disponibles pour ce cocktail. 
+                                Le volume total sera calculé automatiquement.
+                            </div>
+
+                            <!-- Volume total calculé du cocktail -->
+                            <group string="Volume du Cocktail" name="combo_volume_info">
+                                <field name="combo_volume_total" string="Volume total (cl)" readonly="1"/>
+                            </group>
+                            
+                            <!-- Sélection des ingrédients -->
+                            <group string="Ingrédients Sélectionnés" name="selected_ingredients">
+                                <field name="selected_combo_ingredient_ids" 
+                                       domain="[('active', '=', True)]"
+                                       context="{'default_active': True}"
+                                       widget="many2many_tags"
+                                       options="{'color_field': 'combo_category_id'}"/>
+                            </group>
+                            
+                            <!-- Boutons d'action -->
+                            <div style="margin-top: 15px;">
+                                <button name="action_add_ingredients" type="object" 
+                                        string="Ajouter des Ingrédients" 
+                                        class="btn btn-primary"
+                                        icon="fa-plus"/>
+                                <button name="action_clear_ingredients" type="object" 
+                                        string="Effacer tous les Ingrédients" 
+                                        class="btn btn-warning"
+                                        icon="fa-trash"
+                                        style="margin-left: 10px;"/>
+                            </div>
+
+                            <!-- Note sur les propriétés automatiques -->
+                            <div class="alert alert-warning" role="alert" 
+                                 style="background-color: #fff3cd; border-color: #ffeaa7; color: #856404; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                                <strong>Note :</strong> Les produits combo sont automatiquement configurés comme boissons du distributeur. 
+                                Le volume et les crédits sont calculés dynamiquement à partir des ingrédients sélectionnés par le client.
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue héritée pour améliorer la vue standard des produits -->
+    <record id="product_product_form_view_combo_ingredients" model="ir.ui.view">
+        <field name="name">product.product.form.combo.ingredients</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <!-- Ajouter les champs du distributeur dans la section générale -->
+            <xpath expr="//field[@name='detailed_type']" position="after">
+                <field name="is_distributeur_boisson" string="Boisson du distributeur"/>
+                <field name="is_combo_product" string="Produit Combo"/>
+            </xpath>
+
+            <!-- Ajouter les champs du distributeur dans la section des prix -->
+            <xpath expr="//field[@name='list_price']" position="after">
+                <field name="needs_distributor" string="Nécessite distributeur" 
+                       invisible="not is_distributeur_boisson"/>
+                <field name="plu_code" string="Code PLU" 
+                       invisible="not is_distributeur_boisson or not needs_distributor"/>
+                <field name="volume_distributeur" string="Volume (cl)" 
+                       invisible="not is_distributeur_boisson or not needs_distributor"/>
+                <field name="credits_per_serving" string="Crédits par portion" 
+                       invisible="not is_distributeur_boisson or not needs_distributor"/>
+            </xpath>
+            
+            <!-- Ajouter l'onglet Combo personnalisé -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Configuration Combo" name="combo_config" 
+                      invisible="not is_combo_product">
+                    
+                    <!-- Message d'information -->
+                    <div class="alert alert-info" role="alert" 
+                         style="background-color: #d1ecf1; border-color: #bee5eb; color: #0c5460; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                        <strong>Produit Combo :</strong> Ce produit permet aux clients de personnaliser leur commande 
+                        en sélectionnant différents ingrédients selon leurs préférences.
+                    </div>
+
+                    <!-- Configuration des catégories -->
+                    <group string="Catégories de Composants" name="combo_categories">
+                        <field name="combo_line_ids">
+                            <tree editable="bottom">
+                                <field name="combo_category_id" required="1"/>
+                                <field name="required"/>
+                                <field name="min_selections"/>
+                                <field name="max_selections"/>
+                                <field name="sequence" widget="handle"/>
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+
+                <page string="Ingrédients du Cocktail" name="combo_ingredients" 
+                      invisible="not is_combo_product">
+                    
+                    <!-- Message d'information -->
+                    <div class="alert alert-info" role="alert" 
+                         style="background-color: #e7f3ff; border-color: #b3d9ff; color: #004085; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                        <strong>Ingrédients du Cocktail :</strong> Sélectionnez les ingrédients qui seront disponibles pour ce cocktail. 
+                        Le volume total sera calculé automatiquement.
+                    </div>
+
+                    <!-- Volume total calculé du cocktail -->
+                    <group string="Volume du Cocktail" name="combo_volume_info">
+                        <field name="combo_volume_total" string="Volume total (cl)" readonly="1"/>
+                    </group>
+                    
+                    <!-- Sélection des ingrédients -->
+                    <group string="Ingrédients Sélectionnés" name="selected_ingredients">
+                        <field name="selected_combo_ingredient_ids" 
+                               domain="[('active', '=', True)]"
+                               context="{'default_active': True}"
+                               widget="many2many_tags"
+                               options="{'color_field': 'combo_category_id'}"/>
+                    </group>
+                    
+                    <!-- Boutons d'action -->
+                    <div style="margin-top: 15px;">
+                        <button name="action_add_ingredients" type="object" 
+                                string="Ajouter des Ingrédients" 
+                                class="btn btn-primary"
+                                icon="fa-plus"/>
+                        <button name="action_clear_ingredients" type="object" 
+                                string="Effacer tous les Ingrédients" 
+                                class="btn btn-warning"
+                                icon="fa-trash"
+                                style="margin-left: 10px;"/>
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Vue liste personnalisée pour boissons du distributeur -->
+    <record id="product_product_tree_view_distributeur" model="ir.ui.view">
+        <field name="name">product.product.tree.distributeur</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <tree string="Boissons du Distributeur">
+                <field name="name"/>
+                <field name="plu_code"/>
+                <field name="is_distributeur_boisson"/>
+                <field name="is_combo_product"/>
+                <field name="needs_distributor"/>
+                <field name="volume_distributeur"/>
+                <field name="credits_per_serving"/>
+                <field name="list_price"/>
+                <field name="available_in_pos"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action pour ouvrir la vue liste des boissons du distributeur -->
+    <record id="action_product_distributeur_list" model="ir.actions.act_window">
+        <field name="name">Boissons du Distributeur</field>
+        <field name="res_model">product.product</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('is_distributeur_boisson', '=', True)]</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('product_product_tree_view_distributeur')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('product_distributeur_form_view')})]"/>
+    </record>
+
+    <menuitem id="menu_product_distributeur_boisson"
+              name="Boissons du Distributeur"
+              parent="point_of_sale.menu_point_of_sale"
+              action="action_product_distributeur_list"
+              sequence="20"/>
+</odoo>

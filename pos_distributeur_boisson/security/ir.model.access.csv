@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pos_combo_category_user,pos.combo.category.user,model_pos_combo_category,point_of_sale.group_pos_user,1,0,0,0
+access_pos_combo_category_manager,pos.combo.category.manager,model_pos_combo_category,point_of_sale.group_pos_manager,1,1,1,1
+access_pos_combo_option_user,pos.combo.option.user,model_pos_combo_option,point_of_sale.group_pos_user,1,0,0,0
+access_pos_combo_option_manager,pos.combo.option.manager,model_pos_combo_option,point_of_sale.group_pos_manager,1,1,1,1
+access_product_combo_line_user,product.combo.line.user,model_product_combo_line,point_of_sale.group_pos_user,1,0,0,0
+access_product_combo_line_manager,product.combo.line.manager,model_product_combo_line,point_of_sale.group_pos_manager,1,1,1,1
+access_product_template_combo_user,product.template.combo.user,product.model_product_template,point_of_sale.group_pos_user,1,1,0,0
+access_product_template_combo_manager,product.template.combo.manager,product.model_product_template,point_of_sale.group_pos_manager,1,1,1,1
+access_product_product_combo_user,product.product.combo.user,product.model_product_product,point_of_sale.group_pos_user,1,1,0,0
+access_product_product_combo_manager,product.product.combo.manager,product.model_product_product,point_of_sale.group_pos_manager,1,1,1,1
+access_ingredient_selection_wizard_user,ingredient.selection.wizard.user,model_ingredient_selection_wizard,point_of_sale.group_pos_user,1,1,1,0
+access_ingredient_selection_wizard_manager,ingredient.selection.wizard.manager,model_ingredient_selection_wizard,point_of_sale.group_pos_manager,1,1,1,1

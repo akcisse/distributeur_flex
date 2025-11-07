@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Catégories de combo pour les ingrédients -->
+        <record id="combo_category_alcool" model="pos.combo.category">
+            <field name="name">Alcools</field>
+            <field name="sequence">10</field>
+            <field name="description">Alcools pour cocktails</field>
+        </record>
+
+        <record id="combo_category_jus" model="pos.combo.category">
+            <field name="name">Jus</field>
+            <field name="sequence">20</field>
+            <field name="description">Jus de fruits pour cocktails</field>
+        </record>
+
+        <record id="combo_category_sirop" model="pos.combo.category">
+            <field name="name">Sirops</field>
+            <field name="sequence">30</field>
+            <field name="description">Sirops pour cocktails</field>
+        </record>
+
+        <record id="combo_category_garniture" model="pos.combo.category">
+            <field name="name">Garnitures</field>
+            <field name="sequence">40</field>
+            <field name="description">Garnitures pour cocktails</field>
+        </record>
+
+        <!-- Produits de démonstration pour le distributeur -->
+        <!-- Produits normaux (ingrédients) pour les cocktails -->
+        
+        <!-- Alcool -->
+        <record id="product_rhum" model="product.product">
+            <field name="name">Rhum</field>
+            <field name="default_code">RHUM001</field>
+            <field name="type">service</field>
+            <field name="available_in_pos">True</field>
+            <field name="is_distributeur_boisson">True</field>
+            <field name="needs_distributor">True</field>
+            <field name="plu_code">PLU001</field>
+            <field name="volume_distributeur">5.0</field>
+            <field name="credits_per_serving">1</field>
+            <field name="list_price">3.50</field>
+            <field name="description_sale">Rhum blanc pour cocktails</field>
+        </record>
+
+        <record id="product_vodka" model="product.product">
+            <field name="name">Vodka</field>
+            <field name="default_code">VODKA001</field>
+            <field name="type">service</field>
+            <field name="available_in_pos">True</field>
+            <field name="is_distributeur_boisson">True</field>
+            <field name="needs_distributor">True</field>
+            <field name="plu_code">PLU002</field>
+            <field name="volume_distributeur">5.0</field>
+            <field name="credits_per_serving">1</field>
+            <field name="list_price">3.00</field>
+            <field name="description_sale">Vodka pour cocktails</field>
+        </record>
+
+        <record id="product_gin" model="product.product">
+            <field name="name">Gin</field>
+            <field name="default_code">GIN001</field>
+            <field name="type">service</field>
+            <field name="available_in_pos">True</field>
+            <field name="is_distributeur_boisson">True</field>
+            <field name="needs_distributor">True</field>
+            <field name="plu_code">PLU003</field>
+            <field name="volume_distributeur">5.0</field>
+            <field name="credits_per_serving">1</field>
+            <field name="list_price">4.00</field>
+            <field name="description_sale">Gin pour cocktails</field>
+        </record>
+
+        <!-- Jus -->
+        <record id="product_jus_orange" model="product.product">
+            <field name="name">Jus d'Orange</field>
+            <field name="default_code">JUS_ORANGE001</field>
+            <field name="type">service</field>
+            <field name="available_in_pos">True</field>
+            <field name="is_distributeur_boisson">True</field>
+            <field name="needs_distributor">True</field>
+            <field name="plu_code">PLU004</field>
+            <field name="volume_distributeur">10.0</field>
+            <field name="credits_per_serving">1</field>
+            <field name="list_price">2.00</field>
+            <field name="description_sale">Jus d'orange frais</field>
+        </record>
+
+        <record id="product_jus_citron" model="product.product">
+            <field name="name">Jus de Citron</field>
+            <field name="default_code">JUS_CITRON001</field>
+            <field name="type">service</field>
+            <field name="available_in_pos">True</field>
+            <field name="is_distributeur_boisson">True</field>
+            <field name="needs_distributor">True</field>
+            <field name="plu_code">PLU005</field>
+            <field name="volume_distributeur">5.0</field>
+            <field name="credits_per_serving">1</field>
+            <field name="list_price">1.50</field>
+            <field name="description_sale">Jus de citron frais</field>
+        </record>
+
+        <record id="product_jus_ananas" model="product.product">
+            <field name="name">Jus d'Ananas</field>
+            <field name="default_code">JUS_ANANAS001</field>
+            <field name="type">service</field>
+            <field name="available_in_pos">True</field>
+            <field name="is_distributeur_boisson">True</field>
+            <field name="needs_distributor">True</field>
+            <field name="plu_code">PLU006</field>
+            <field name="volume_distributeur">10.0</field>
+            <field name="credits_per_serving">1</field>
+            <field name="list_price">2.50</field>
+            <field name="description_sale">Jus d'ananas frais</field>
+        </record>
+
+        <!-- Sirop -->
+        <record id="product_sirop_grenadine" model="product.product">
+            <field name="name">Sirop de Grenadine</field>
+            <field name="default_code">SIROP_GRENADINE001</field>
+            <field name="type">service</field>
+            <field name="available_in_pos">True</field>
+            <field name="is_distributeur_boisson">True</field>
+            <field name="needs_distributor">True</field>
+            <field name="plu_code">PLU007</field>
+            <field name="volume_distributeur">3.0</field>
+            <field name="credits_per_serving">1</field>
+            <field name="list_price">1.00</field>
+            <field name="description_sale">Sirop de grenadine</field>
+        </record>
+
+        <record id="product_sirop_menthe" model="product.product">
+            <field name="name">Sirop de Menthe</field>
+            <field name="default_code">SIROP_MENTHE001</field>
+            <field name="type">service</field>
+            <field name="available_in_pos">True</field>
+            <field name="is_distributeur_boisson">True</field>
+            <field name="needs_distributor">True</field>
+            <field name="plu_code">PLU008</field>
+            <field name="volume_distributeur">3.0</field>
+            <field name="credits_per_serving">1</field>
+            <field name="list_price">1.00</field>
+            <field name="description_sale">Sirop de menthe</field>
+        </record>
+
+        <!-- Garniture -->
+        <record id="product_menthe_fraiche" model="product.product">
+            <field name="name">Menthe Fraîche</field>
+            <field name="default_code">MENTHE_FRAICHE001</field>
+            <field name="type">service</field>
+            <field name="available_in_pos">True</field>
+            <field name="is_distributeur_boisson">True</field>
+            <field name="needs_distributor">True</field>
+            <field name="plu_code">PLU009</field>
+            <field name="volume_distributeur">1.0</field>
+            <field name="credits_per_serving">1</field>
+            <field name="list_price">0.50</field>
+            <field name="description_sale">Menthe fraîche pour garniture</field>
+        </record>
+
+        <record id="product_tranche_citron" model="product.product">
+            <field name="name">Tranche de Citron</field>
+            <field name="default_code">CITRON_TRANCHE001</field>
+            <field name="type">service</field>
+            <field name="available_in_pos">True</field>
+            <field name="is_distributeur_boisson">True</field>
+            <field name="needs_distributor">True</field>
+            <field name="plu_code">PLU010</field>
+            <field name="volume_distributeur">1.0</field>
+            <field name="credits_per_serving">1</field>
+            <field name="list_price">0.30</field>
+            <field name="description_sale">Tranche de citron pour garniture</field>
+        </record>
+
+        <!-- Options de combo pour les ingrédients -->
+        <record id="combo_option_rhum" model="pos.combo.option">
+            <field name="name">Rhum</field>
+            <field name="combo_category_id" ref="combo_category_alcool"/>
+            <field name="product_id" ref="product_rhum"/>
+            <field name="price_extra">0.0</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="combo_option_vodka" model="pos.combo.option">
+            <field name="name">Vodka</field>
+            <field name="combo_category_id" ref="combo_category_alcool"/>
+            <field name="product_id" ref="product_vodka"/>
+            <field name="price_extra">0.0</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="combo_option_gin" model="pos.combo.option">
+            <field name="name">Gin</field>
+            <field name="combo_category_id" ref="combo_category_alcool"/>
+            <field name="product_id" ref="product_gin"/>
+            <field name="price_extra">0.5</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="combo_option_jus_orange" model="pos.combo.option">
+            <field name="name">Jus d'Orange</field>
+            <field name="combo_category_id" ref="combo_category_jus"/>
+            <field name="product_id" ref="product_jus_orange"/>
+            <field name="price_extra">0.0</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="combo_option_jus_citron" model="pos.combo.option">
+            <field name="name">Jus de Citron</field>
+            <field name="combo_category_id" ref="combo_category_jus"/>
+            <field name="product_id" ref="product_jus_citron"/>
+            <field name="price_extra">0.0</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="combo_option_jus_ananas" model="pos.combo.option">
+            <field name="name">Jus d'Ananas</field>
+            <field name="combo_category_id" ref="combo_category_jus"/>
+            <field name="product_id" ref="product_jus_ananas"/>
+            <field name="price_extra">0.5</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="combo_option_sirop_grenadine" model="pos.combo.option">
+            <field name="name">Sirop de Grenadine</field>
+            <field name="combo_category_id" ref="combo_category_sirop"/>
+            <field name="product_id" ref="product_sirop_grenadine"/>
+            <field name="price_extra">0.0</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="combo_option_sirop_menthe" model="pos.combo.option">
+            <field name="name">Sirop de Menthe</field>
+            <field name="combo_category_id" ref="combo_category_sirop"/>
+            <field name="product_id" ref="product_sirop_menthe"/>
+            <field name="price_extra">0.0</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="combo_option_menthe_fraiche" model="pos.combo.option">
+            <field name="name">Menthe Fraîche</field>
+            <field name="combo_category_id" ref="combo_category_garniture"/>
+            <field name="product_id" ref="product_menthe_fraiche"/>
+            <field name="price_extra">0.0</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="combo_option_tranche_citron" model="pos.combo.option">
+            <field name="name">Tranche de Citron</field>
+            <field name="combo_category_id" ref="combo_category_garniture"/>
+            <field name="product_id" ref="product_tranche_citron"/>
+            <field name="price_extra">0.0</field>
+            <field name="sequence">20</field>
+        </record>
+
+    </data>
+</odoo>

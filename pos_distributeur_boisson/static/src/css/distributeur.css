@@ -1,0 +1,662 @@
+/* Styles pour le module distributeur de boissons */
+
+/* Bouton distributeur - style boisson */
+.control-button.distributeur-btn {
+    background: linear-gradient(135deg, #4a90e2, #357abd) !important;
+    border-color: #4a90e2 !important;
+    color: white !important;
+    box-shadow: 0 2px 4px rgba(74, 144, 226, 0.3);
+    transition: all 0.3s ease;
+}
+
+.control-button.distributeur-btn:hover {
+    background: linear-gradient(135deg, #357abd, #2968a3) !important;
+    border-color: #357abd !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(74, 144, 226, 0.4);
+}
+
+.control-button.distributeur-btn:disabled {
+    background: #cccccc !important;
+    border-color: #cccccc !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Popup boisson - design simple et efficace */
+.distributeur-popup.boisson-popup {
+    width: 700px;
+    max-width: 95vw;
+    max-height: 90vh;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.distributeur-popup .popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    background: linear-gradient(135deg, #4a90e2, #357abd);
+    color: white;
+    border-radius: 12px 12px 0 0;
+}
+
+.distributeur-popup .popup-header h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.middleware-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.distributeur-popup .btn-close {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.distributeur-popup .btn-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.distributeur-popup .popup-body {
+    padding: 25px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+/* Grille des boissons */
+.distributeur-boissons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.distributeur-boisson {
+    border: 2px solid #f0f0f0;
+    border-radius: 8px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+    position: relative;
+}
+
+.distributeur-boisson:hover {
+    border-color: #4a90e2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.15);
+}
+
+.distributeur-boisson.selected {
+    border-color: #28a745;
+    background: linear-gradient(135deg, #e8f5e8, #f0f9f0);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.25);
+}
+
+/* Header de la boisson */
+.boisson-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.boisson-icon {
+    font-size: 28px;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.boisson-info {
+    flex: 1;
+}
+
+.boisson-nom {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.boisson-prix {
+    font-size: 14px;
+    color: #28a745;
+    font-weight: 600;
+}
+
+.boisson-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.volume-info {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #3498db;
+    font-size: 12px;
+}
+
+.plu-info {
+    font-size: 11px;
+    color: #666;
+    background: #f8f9fa;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* Description de la boisson */
+.boisson-description {
+    color: #666;
+    font-size: 12px;
+    margin-top: 8px;
+    font-style: italic;
+}
+
+/* Indicateur de sélection */
+.selected-indicator {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #28a745;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    animation: pulse 0.5s ease-in-out;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.8); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Détails de sélection */
+.selection-info {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border: 2px solid #28a745;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 15px;
+}
+
+.selection-details h4 {
+    margin: 0 0 15px 0;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.selection-details .prix {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.distribution-details {
+    margin: 15px 0;
+}
+
+.distribution-details h5 {
+    color: #495057;
+    font-size: 14px;
+    margin: 0 0 10px 0;
+}
+
+.distribution-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.info-item {
+    background: white;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.info-item .label {
+    font-size: 11px;
+    color: #666;
+    font-weight: 500;
+}
+
+.info-item .value {
+    font-size: 13px;
+    color: #495057;
+    font-weight: 600;
+}
+
+.process-info {
+    margin-top: 15px;
+    padding: 10px;
+    background: rgba(74, 144, 226, 0.1);
+    border-radius: 6px;
+    color: #2c5282;
+}
+
+/* Footer */
+.distributeur-popup .popup-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+}
+
+.footer-left .middleware-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #666;
+}
+
+.footer-right {
+    display: flex;
+    gap: 12px;
+}
+
+.footer-right .btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.footer-right .btn-secondary {
+    background: #6c757d;
+    border-color: #6c757d;
+    color: white;
+}
+
+.footer-right .btn-secondary:hover {
+    background: #545b62;
+    border-color: #545b62;
+}
+
+.footer-right .distributeur-btn {
+    background: linear-gradient(135deg, #4a90e2, #357abd);
+    border-color: #4a90e2;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-right .distributeur-btn:hover {
+    background: linear-gradient(135deg, #357abd, #2968a3);
+    border-color: #357abd;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(74, 144, 226, 0.3);
+}
+
+.footer-right .distributeur-btn:disabled {
+    background: #6c757d !important;
+    border-color: #6c757d !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Couleurs de statut */
+.text-success {
+    color: #28a745 !important;
+}
+
+.text-warning {
+    color: #ffc107 !important;
+}
+
+.text-danger {
+    color: #dc3545 !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .distributeur-popup.boisson-popup {
+        width: 95vw;
+        max-height: 95vh;
+    }
+    
+    .distributeur-boissons {
+        grid-template-columns: 1fr;
+    }
+    
+    .boisson-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .boisson-meta {
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .distribution-info {
+        grid-template-columns: 1fr;
+    }
+    
+    .distributeur-popup .popup-footer {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .footer-right {
+        width: 100%;
+        justify-content: center;
+    }
+} 
+
+/* Styles pour le popup combo */
+.popup-combo {
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.popup-combo .popup-header {
+    background: linear-gradient(135deg, #4a90e2, #357abd);
+    color: white;
+    padding: 20px;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.popup-combo .popup-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.popup-combo .close-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.popup-combo .close-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.popup-combo .popup-body {
+    padding: 20px;
+    background: #f8f9fa;
+}
+
+.combo-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.combo-category {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.category-header {
+    margin-bottom: 15px;
+}
+
+.category-header h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.selection-info {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: normal;
+}
+
+.required-badge {
+    color: #dc3545;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.min-selections {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+}
+
+.options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.option-item {
+    border: 2px solid #e9ecef;
+    border-radius: 6px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+    position: relative;
+}
+
+.option-item:hover {
+    border-color: #4a90e2;
+    box-shadow: 0 2px 8px rgba(74, 144, 226, 0.2);
+}
+
+.option-item.selected {
+    border-color: #28a745;
+    background: #f8fff9;
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.2);
+}
+
+.option-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.option-name {
+    font-weight: 500;
+    color: #333;
+}
+
+.option-price {
+    font-size: 0.9rem;
+    color: #28a745;
+    font-weight: 600;
+}
+
+.option-checkbox {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    background: #28a745;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.8rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.option-item.selected .option-checkbox {
+    opacity: 1;
+}
+
+.selections-summary {
+    background: #e3f2fd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+.selections-summary h4 {
+    margin: 0 0 10px 0;
+    color: #1976d2;
+    font-size: 1.1rem;
+}
+
+.summary-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.summary-category {
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.summary-category strong {
+    color: #1976d2;
+}
+
+.total-extra-price {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 6px;
+    padding: 12px;
+    text-align: center;
+    color: #856404;
+    margin-top: 15px;
+}
+
+.popup-combo .popup-footer {
+    padding: 20px;
+    background: white;
+    border-top: 1px solid #e9ecef;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    border-radius: 0 0 8px 8px;
+}
+
+.popup-combo .btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.popup-combo .btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.popup-combo .btn-secondary:hover {
+    background: #545b62;
+}
+
+.popup-combo .btn-primary {
+    background: #28a745;
+    color: white;
+}
+
+.popup-combo .btn-primary:hover {
+    background: #218838;
+}
+
+.popup-combo .btn-primary:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+}
+
+/* Styles pour les lignes de commande avec combo */
+.combo-options {
+    margin-top: 5px;
+    padding: 5px 10px;
+    background: #f8f9fa;
+    border-radius: 4px;
+    border-left: 3px solid #4a90e2;
+}
+
+.combo-options small {
+    color: #666;
+    font-size: 0.85rem;
+    line-height: 1.3;
+}
+
+/* Responsive pour le popup combo */
+@media (max-width: 768px) {
+    .popup-combo {
+        width: 95vw;
+        max-height: 95vh;
+    }
+    
+    .options-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .popup-combo .popup-footer {
+        flex-direction: column;
+    }
+    
+    .popup-combo .btn {
+        width: 100%;
+    }
+} 

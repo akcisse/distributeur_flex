@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vue formulaire pour le wizard de sélection d'ingrédients -->
+    <record id="ingredient_selection_wizard_form_view" model="ir.ui.view">
+        <field name="name">ingredient.selection.wizard.form</field>
+        <field name="model">ingredient.selection.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Sélectionner des Ingrédients">
+                <sheet>
+                    <div class="alert alert-info" role="alert">
+                        <strong>Instructions :</strong> Sélectionnez les ingrédients que vous voulez ajouter à votre cocktail, puis cliquez sur "Ajouter les Ingrédients Sélectionnés".
+                    </div>
+                    
+                    <group>
+                        <field name="product_template_id" invisible="1"/>
+                        <field name="selected_ingredients" 
+                               widget="many2many_tags" 
+                               options="{'color_field': 'combo_category_id'}"
+                               domain="[('active', '=', True)]"
+                               context="{'default_active': True}"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_add_selected_ingredients" 
+                            type="object" 
+                            string="Ajouter les Ingrédients Sélectionnés" 
+                            class="btn-primary"/>
+                    <button string="Annuler" 
+                            class="btn-secondary" 
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action pour le wizard -->
+    <record id="action_ingredient_selection_wizard" model="ir.actions.act_window">
+        <field name="name">Sélectionner des Ingrédients</field>
+        <field name="res_model">ingredient.selection.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="ingredient_selection_wizard_form_view"/>
+    </record>
+</odoo> 
